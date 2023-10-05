@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.6.33815.320
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "task-manager.api", "task-manager.api\task-manager.api.csproj", "{4FEDB14E-E0BB-45ED-B0F4-0A323862222B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "task-manager.api", "task-manager.api\task-manager.api.csproj", "{4FEDB14E-E0BB-45ED-B0F4-0A323862222B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "task-manager.data", "task-manager.data\task-manager.data.csproj", "{9B329F32-E304-4248-ACE8-D5F9F328ADEA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{4FEDB14E-E0BB-45ED-B0F4-0A323862222B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4FEDB14E-E0BB-45ED-B0F4-0A323862222B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4FEDB14E-E0BB-45ED-B0F4-0A323862222B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9B329F32-E304-4248-ACE8-D5F9F328ADEA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9B329F32-E304-4248-ACE8-D5F9F328ADEA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9B329F32-E304-4248-ACE8-D5F9F328ADEA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9B329F32-E304-4248-ACE8-D5F9F328ADEA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
