@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace task_manager.data.Models
 {
-    internal class Categoria
+    public class Task
     {
     }
 }
