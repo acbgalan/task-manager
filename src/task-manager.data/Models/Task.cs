@@ -9,13 +9,15 @@ using System.Threading.Tasks;
 
 namespace task_manager.data.Models
 {
-    public class Task
+    public class Tasks
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public Guid Id { get; set; }
 
         [DisplayName("Tarea")]
+        [Required(AllowEmptyStrings = false, ErrorMessage = "El campo {0} es requerido")]
+        [StringLength(500, ErrorMessage = "Se esperaba una cadena de texto con un máximo de {1} caracteres")]
         public string Name { get; set; }
 
         [DisplayName("Aviso")]
@@ -23,6 +25,8 @@ namespace task_manager.data.Models
 
         [DisplayName("Fecha de vencimiento")]
         public DateTime? ExpirationTime { get; set; }
+
+        public List<Category> Categories { get; set; }
 
     }
 }
