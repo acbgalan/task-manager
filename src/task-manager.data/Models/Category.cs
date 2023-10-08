@@ -13,7 +13,7 @@ namespace task_manager.data.Models
         public int Id { get; set; }
 
         [DisplayName("Categoría")]
-        [Required(AllowEmptyStrings = = false, ErrorMessage = "El campo {0} es requerido")]
+        [Required(AllowEmptyStrings = false, ErrorMessage = "El campo {0} es requerido")]
         [StringLength(25, ErrorMessage = "Se esperaba una cadena de texto con un máximo de {1} caracteres")]
         public string Name { get; set; }
 
