@@ -21,6 +21,9 @@ namespace task_manager.data.Models
         [DisplayName("Fecha de vencimiento")]
         public DateTime? ExpirationTime { get; set; }
 
+        public DateTime CreationTime { get; set; } = DateTime.Now;
+
+
         public List<Category> Categories { get; set; }
     }
 }
