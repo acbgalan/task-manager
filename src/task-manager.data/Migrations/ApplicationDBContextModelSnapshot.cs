@@ -56,6 +56,11 @@ namespace task_manager.data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<DateTime>("CreationTime")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValue(new DateTime(2023, 10, 10, 1, 43, 58, 186, DateTimeKind.Local).AddTicks(7883));
+
                     b.Property<DateTime?>("ExpirationTime")
                         .HasColumnType("datetime2");
 

@@ -18,7 +18,8 @@ namespace task_manager.data.Migrations
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: false),
                     RemenberMe = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    ExpirationTime = table.Column<DateTime>(type: "datetime2", nullable: true)
+                    ExpirationTime = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    CreationTime = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValue: new DateTime(2023, 10, 10, 1, 43, 58, 186, DateTimeKind.Local).AddTicks(7883))
                 },
                 constraints: table =>
                 {

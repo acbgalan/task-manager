@@ -12,7 +12,7 @@ using task_manager.data;
 namespace task_manager.data.Migrations
 {
     [DbContext(typeof(ApplicationDBContext))]
-    [Migration("20231009225438_Inicial")]
+    [Migration("20231009234358_Inicial")]
     partial class Inicial
     {
         /// <inheritdoc />
@@ -58,6 +58,11 @@ namespace task_manager.data.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreationTime")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValue(new DateTime(2023, 10, 10, 1, 43, 58, 186, DateTimeKind.Local).AddTicks(7883));
 
                     b.Property<DateTime?>("ExpirationTime")
                         .HasColumnType("datetime2");
