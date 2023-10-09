@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using task_manager.data.Models;
+using Task = task_manager.data.Models.Task;
 
 namespace task_manager.data
 {
