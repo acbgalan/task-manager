@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace task_manager.data.Models
 {
-    public class Tasks
+    public class Task
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
