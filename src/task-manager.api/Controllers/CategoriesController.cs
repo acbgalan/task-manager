@@ -53,6 +53,38 @@ namespace task_manager.api.Controllers
             return CreatedAtAction("GetCategory", new { id = category.Id }, category);
         }
 
+        [HttpPut("{id:int}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+
+        public async Task<ActionResult> UpdateCategory(int id, Category category)
+        {
+            if (category == null)
+            {
+                return BadRequest();
+            }
+
+            bool exits = await _categoryRepository.ExitsAsync(id);
+
+            if (!exits)
+            {
+                return NotFound();
+            }
+
+            category.Id = id;
+            await _categoryRepository.UpdateAsync(category);
+            int saveResult = await _categoryRepository.SaveSync();
+
+            if (!(saveResult > 0))
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "Unexpected value when updating record.");
+            }
+
+            return NoContent();
+        }
+
 
 
 
