@@ -32,15 +32,16 @@ namespace task_manager.api.Controllers
         }
 
         [HttpPost]
+        [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<ActionResult> CreateCategory(string name)
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<ActionResult> CreateCategory(Category category)
         {
-            if (string.IsNullOrWhiteSpace(name))
+            if (category == null)
             {
                 return BadRequest();
             }
 
-            Category category = new Category { Name = name };
             await _categoryRepository.AddAsync(category);
             int saveResult = await _categoryRepository.SaveSync();
 
@@ -51,6 +52,9 @@ namespace task_manager.api.Controllers
 
             return CreatedAtAction("GetCategory", new { id = category.Id }, category);
         }
+
+
+
 
 
 
