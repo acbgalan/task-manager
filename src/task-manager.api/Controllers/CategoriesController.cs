@@ -79,16 +79,34 @@ namespace task_manager.api.Controllers
 
             if (!(saveResult > 0))
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, "Unexpected value when updating record.");
+                return StatusCode(StatusCodes.Status500InternalServerError, "Unexpected value when updating a record.");
             }
 
             return NoContent();
         }
 
+        [HttpDelete("{id:int}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<ActionResult> DeleteCategory(int id)
+        {
+            bool exits = await _categoryRepository.ExitsAsync(id);
 
+            if (!exits)
+            {
+                return NotFound("Category not found");
+            }
 
+            await _categoryRepository.DeleteAsync(id);
+            int saveResult = await _categoryRepository.SaveSync();
 
+            if(!(saveResult > 0))
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "Unexpected value when deleting a record.");
+            }
 
+            return NoContent();
+        }
 
     }
 }
