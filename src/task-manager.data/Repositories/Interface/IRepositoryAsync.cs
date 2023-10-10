@@ -1,11 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations.Operations;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace task_manager.data.Repositories.Interface
+﻿namespace task_manager.data.Repositories.Interface
 {
     public interface IRepositoryAsync<T>
     {
@@ -19,6 +12,6 @@ namespace task_manager.data.Repositories.Interface
         Task DeleteAsync(T entity);
         Task<bool> ExitsAsync(int id);
         Task<bool> ExitsAsync(string id);
-        Task<int> SaveChangesASync();
+        Task<int> SaveSync();
     }
 }
