@@ -12,6 +12,19 @@ namespace task_manager.data.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
+                name: "Categories",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(25)", maxLength: 25, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Categories", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Tasks",
                 columns: table => new
                 {
@@ -19,7 +32,7 @@ namespace task_manager.data.Migrations
                     Name = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: false),
                     RemenberMe = table.Column<DateTime>(type: "datetime2", nullable: true),
                     ExpirationTime = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    CreationTime = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValue: new DateTime(2023, 10, 10, 1, 43, 58, 186, DateTimeKind.Local).AddTicks(7883))
+                    CreationTime = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "GETDATE()")
                 },
                 constraints: table =>
                 {
@@ -27,44 +40,41 @@ namespace task_manager.data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Categories",
+                name: "CategoryTasks",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(25)", maxLength: 25, nullable: false),
-                    CategoryId = table.Column<int>(type: "int", nullable: true),
-                    TaskId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
+                    CategoriesId = table.Column<int>(type: "int", nullable: false),
+                    TasksId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Categories", x => x.Id);
+                    table.PrimaryKey("PK_CategoryTasks", x => new { x.CategoriesId, x.TasksId });
                     table.ForeignKey(
-                        name: "FK_Categories_Categories_CategoryId",
-                        column: x => x.CategoryId,
+                        name: "FK_CategoryTasks_Categories_CategoriesId",
+                        column: x => x.CategoriesId,
                         principalTable: "Categories",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Categories_Tasks_TaskId",
-                        column: x => x.TaskId,
+                        name: "FK_CategoryTasks_Tasks_TasksId",
+                        column: x => x.TasksId,
                         principalTable: "Tasks",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Categories_CategoryId",
-                table: "Categories",
-                column: "CategoryId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Categories_TaskId",
-                table: "Categories",
-                column: "TaskId");
+                name: "IX_CategoryTasks_TasksId",
+                table: "CategoryTasks",
+                column: "TasksId");
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "CategoryTasks");
+
             migrationBuilder.DropTable(
                 name: "Categories");
 

@@ -22,6 +22,21 @@ namespace task_manager.data.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("CategoryTask", b =>
+                {
+                    b.Property<int>("CategoriesId")
+                        .HasColumnType("int");
+
+                    b.Property<Guid>("TasksId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("CategoriesId", "TasksId");
+
+                    b.HasIndex("TasksId");
+
+                    b.ToTable("CategoryTask");
+                });
+
             modelBuilder.Entity("task_manager.data.Models.Category", b =>
                 {
                     b.Property<int>("Id")
@@ -30,22 +45,12 @@ namespace task_manager.data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int?>("CategoryId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(25)
                         .HasColumnType("nvarchar(25)");
 
-                    b.Property<Guid?>("TaskId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("CategoryId");
-
-                    b.HasIndex("TaskId");
 
                     b.ToTable("Categories");
                 });
@@ -59,7 +64,7 @@ namespace task_manager.data.Migrations
                     b.Property<DateTime>("CreationTime")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2023, 10, 10, 1, 43, 58, 186, DateTimeKind.Local).AddTicks(7883));
+                        .HasDefaultValueSql("GETDATE()");
 
                     b.Property<DateTime?>("ExpirationTime")
                         .HasColumnType("datetime2");
@@ -77,25 +82,19 @@ namespace task_manager.data.Migrations
                     b.ToTable("Tasks");
                 });
 
-            modelBuilder.Entity("task_manager.data.Models.Category", b =>
+            modelBuilder.Entity("CategoryTask", b =>
                 {
                     b.HasOne("task_manager.data.Models.Category", null)
-                        .WithMany("Categories")
-                        .HasForeignKey("CategoryId");
+                        .WithMany()
+                        .HasForeignKey("CategoriesId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("task_manager.data.Models.Task", null)
-                        .WithMany("Categories")
-                        .HasForeignKey("TaskId");
-                });
-
-            modelBuilder.Entity("task_manager.data.Models.Category", b =>
-                {
-                    b.Navigation("Categories");
-                });
-
-            modelBuilder.Entity("task_manager.data.Models.Task", b =>
-                {
-                    b.Navigation("Categories");
+                        .WithMany()
+                        .HasForeignKey("TasksId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

@@ -17,6 +17,6 @@ namespace task_manager.data.Models
         [StringLength(25, ErrorMessage = "Se esperaba una cadena de texto con un máximo de {1} caracteres")]
         public string Name { get; set; }
 
-        public List<Category> Categories { get; set; }
+        public List<Task> Tasks { get; set; }
     }
 }

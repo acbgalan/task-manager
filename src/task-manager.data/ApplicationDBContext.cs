@@ -19,7 +19,7 @@ namespace task_manager.data
 
             modelBuilder.Entity<Task>()
                 .Property(prop => prop.CreationTime)
-                .HasDefaultValue(DateTime.Now);
+                .HasDefaultValueSql("GETDATE()");
         }
     }
 }
