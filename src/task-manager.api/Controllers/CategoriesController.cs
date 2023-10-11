@@ -1,5 +1,7 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using task_manager.api.Responses.Category;
 using task_manager.data.Models;
 using task_manager.data.Repositories.Interface;
 
@@ -10,18 +12,29 @@ namespace task_manager.api.Controllers
     public class CategoriesController : ControllerBase
     {
         private readonly ICategoryRepository _categoryRepository;
+        private readonly IMapper _mapper;
 
-        public CategoriesController(ICategoryRepository categoryRepository)
+        public CategoriesController(ICategoryRepository categoryRepository, IMapper mapper)
         {
             _categoryRepository = categoryRepository;
+            _mapper = mapper;
         }
 
         [HttpGet("{id:int}", Name = "GetCategory")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<ActionResult<Category>> GetCategory(int id)
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<ActionResult<CategoryResponse>> GetCategory(int id)
         {
             var category = await _categoryRepository.GetAsync(id);
-            return category == null ? NotFound() : Ok(category);
+
+            if (category == null)
+            {
+                return NotFound("Category not found");
+            }
+
+            var categoryResponse = _mapper.Map<CategoryResponse>(category);
+
+            return Ok(categoryResponse);
         }
 
         [HttpGet]
@@ -100,7 +113,7 @@ namespace task_manager.api.Controllers
             await _categoryRepository.DeleteAsync(id);
             int saveResult = await _categoryRepository.SaveSync();
 
-            if(!(saveResult > 0))
+            if (!(saveResult > 0))
             {
                 return StatusCode(StatusCodes.Status500InternalServerError, "Unexpected value when deleting a record.");
             }
