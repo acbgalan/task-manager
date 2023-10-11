@@ -39,9 +39,12 @@ namespace task_manager.api.Controllers
 
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<List<Category>> GetAllCategories()
+        public async Task<ActionResult<List<CategoryResponse>>> GetAllCategories()
         {
-            return await _categoryRepository.GetAllAsync();
+            var categories = await _categoryRepository.GetAllAsync();
+            var categoriesResponse = _mapper.Map<List<CategoryResponse>>(categories);
+
+            return Ok(categoriesResponse);
         }
 
         [HttpPost]
