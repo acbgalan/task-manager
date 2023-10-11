@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using task_manager.api.Requests.Category;
 using task_manager.api.Responses.Category;
 using task_manager.data.Models;
 using task_manager.data.Repositories.Interface;
@@ -51,13 +52,14 @@ namespace task_manager.api.Controllers
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<ActionResult> CreateCategory(Category category)
+        public async Task<ActionResult> CreateCategory([FromBody] CreateCategoryRequest createCategoryRequest)
         {
-            if (category == null)
+            if (createCategoryRequest == null)
             {
                 return BadRequest();
             }
 
+            var category = _mapper.Map<Category>(createCategoryRequest);
             await _categoryRepository.AddAsync(category);
             int saveResult = await _categoryRepository.SaveSync();
 
