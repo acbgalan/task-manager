@@ -24,8 +24,4 @@
     <ProjectReference Include="..\task-manager.data\task-manager.data.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Requests\" />
-  </ItemGroup>
-
 </Project>

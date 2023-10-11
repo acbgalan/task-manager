@@ -7,7 +7,6 @@ namespace task_manager.api.Responses.Category
     {
         public int Id { get; set; }
 
-        [DisplayName("Categoría")]
         public string Name { get; set; }
     }
 }
