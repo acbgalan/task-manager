@@ -46,5 +46,23 @@ namespace task_manager.api.Controllers
             return Ok(stepsResponse);
         }
 
+        [HttpGet("{taskId}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<ActionResult<List<StepResponse>>> GetStepsByTaskId(string taskId)
+        {
+            Guid stepTaskId;
+
+            if (!Guid.TryParse(taskId, out stepTaskId))
+            {
+                return BadRequest("The 'taskId' parameter is not valid. Make sure it is a valid Guid value.");
+            }
+
+            var steps = await _stepRepository.GetAllSteps(taskId);
+            var stepsResponse = _mapper.Map<StepResponse>(steps);
+
+            return Ok(stepsResponse);
+        }
+
     }
 }
