@@ -34,7 +34,7 @@ namespace task_manager.data.Migrations
 
                     b.HasIndex("TasksId");
 
-                    b.ToTable("CategoryTask");
+                    b.ToTable("CategoryTask", (string)null);
                 });
 
             modelBuilder.Entity("task_manager.data.Models.Category", b =>
@@ -52,7 +52,7 @@ namespace task_manager.data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Categories");
+                    b.ToTable("Categories", (string)null);
                 });
 
             modelBuilder.Entity("task_manager.data.Models.Task", b =>
@@ -79,7 +79,7 @@ namespace task_manager.data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Tasks");
+                    b.ToTable("Tasks", (string)null);
                 });
 
             modelBuilder.Entity("CategoryTask", b =>
