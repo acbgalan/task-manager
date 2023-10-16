@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using task_manager.api.Responses.Step;
 using task_manager.data;
+using task_manager.data.Repositories.Interface;
 
 namespace task_manager.api.Controllers
 {
@@ -10,13 +11,39 @@ namespace task_manager.api.Controllers
     [ApiController]
     public class StepsController : ControllerBase
     {
-        private readonly ApplicationDBContext _context;
+        private readonly IStepRepository _stepRepository;
         private readonly IMapper _mapper;
 
-        public StepsController(ApplicationDBContext context, IMapper mapper)
+        public StepsController(IStepRepository stepRepository, IMapper mapper)
         {
-            _context = context;
+            _stepRepository = stepRepository;
             _mapper = mapper;
+        }
+
+        [HttpGet("{id:int}", Name = "GetStep")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<ActionResult<StepResponse>> GetStep(int id)
+        {
+            var step = await _stepRepository.GetAsync(id);
+
+            if (step == null)
+            {
+                return NotFound("Step not found");
+            }
+
+            var stepResponse = _mapper.Map<StepResponse>(step);
+            return Ok(stepResponse);
+        }
+
+        [HttpGet]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<ActionResult<List<StepResponse>>> GetAllSteps()
+        {
+            var steps = await _stepRepository.GetAllAsync();
+            var stepsResponse = _mapper.Map<List<StepResponse>>(steps);
+
+            return Ok(stepsResponse);
         }
 
     }
