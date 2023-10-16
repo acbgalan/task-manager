@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using task_manager.api.Requests.Category;
 using task_manager.api.Responses.Category;
 using task_manager.data.Models;
+using task_manager.data.Repositories;
 using task_manager.data.Repositories.Interface;
 
 namespace task_manager.api.Controllers
@@ -68,7 +69,9 @@ namespace task_manager.api.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError);
             }
 
-            return CreatedAtAction("GetCategory", new { id = category.Id }, category);
+            var categoryResponse = _mapper.Map<CategoryResponse>(category);
+
+            return CreatedAtAction("GetCategory", new { id = categoryResponse.Id }, categoryResponse);
         }
 
         [HttpPut("{id:int}")]
