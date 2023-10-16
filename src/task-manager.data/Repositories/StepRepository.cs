@@ -38,6 +38,11 @@ namespace task_manager.data.Repositories
             return await _context.Steps.ToListAsync();
         }
 
+        public async Task<List<Step>> GetAllSteps(string taskId)
+        {
+            return await _context.Steps.Where(x => x.TaskId == new Guid(taskId)).ToListAsync();
+        }
+
         public async System.Threading.Tasks.Task UpdateAsync(Step entity)
         {
             await System.Threading.Tasks.Task.Run(() =>

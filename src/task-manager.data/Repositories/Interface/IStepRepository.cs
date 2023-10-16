@@ -9,5 +9,7 @@ namespace task_manager.data.Repositories.Interface
 {
     public interface IStepRepository : IRepositoryAsync<Step>
     {
+        Task<List<Step>> GetAllSteps(string taskId);
+        
     }
 }
