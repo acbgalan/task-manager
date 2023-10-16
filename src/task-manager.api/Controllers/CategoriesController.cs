@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using task_manager.api.Requests.Category;
 using task_manager.api.Responses.Category;
 using task_manager.data.Models;
+using task_manager.data.Repositories;
 using task_manager.data.Repositories.Interface;
 
 namespace task_manager.api.Controllers
@@ -61,14 +62,16 @@ namespace task_manager.api.Controllers
 
             var category = _mapper.Map<Category>(createCategoryRequest);
             await _categoryRepository.AddAsync(category);
-            int saveResult = await _categoryRepository.SaveSync();
+            int saveResult = await _categoryRepository.SaveAsync();
 
             if (!(saveResult > 0))
             {
                 return StatusCode(StatusCodes.Status500InternalServerError);
             }
 
-            return CreatedAtAction("GetCategory", new { id = category.Id }, category);
+            var categoryResponse = _mapper.Map<CategoryResponse>(category);
+
+            return CreatedAtAction("GetCategory", new { id = categoryResponse.Id }, categoryResponse);
         }
 
         [HttpPut("{id:int}")]
@@ -77,7 +80,7 @@ namespace task_manager.api.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
 
-        public async Task<ActionResult> UpdateCategory(int id, Category category)
+        public async Task<ActionResult> UpdateCategory(int id, Category category) //TODO: Se debe recibir DTO y usar automapper
         {
             if (category == null)
             {
@@ -93,7 +96,7 @@ namespace task_manager.api.Controllers
 
             category.Id = id;
             await _categoryRepository.UpdateAsync(category);
-            int saveResult = await _categoryRepository.SaveSync();
+            int saveResult = await _categoryRepository.SaveAsync();
 
             if (!(saveResult > 0))
             {
@@ -116,7 +119,7 @@ namespace task_manager.api.Controllers
             }
 
             await _categoryRepository.DeleteAsync(id);
-            int saveResult = await _categoryRepository.SaveSync();
+            int saveResult = await _categoryRepository.SaveAsync();
 
             if (!(saveResult > 0))
             {

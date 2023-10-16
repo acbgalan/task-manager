@@ -4,7 +4,7 @@
     {
         Task AddAsync(T entity);
         Task<T> GetAsync(int id);
-        Task<T> GetASync(string id);
+        Task<T> GetAsync(string id);
         Task<List<T>> GetAllAsync();
         Task UpdateAsync(T entity);
         Task DeleteAsync(int id);
@@ -12,6 +12,6 @@
         Task DeleteAsync(T entity);
         Task<bool> ExitsAsync(int id);
         Task<bool> ExitsAsync(string id);
-        Task<int> SaveSync();
+        Task<int> SaveAsync();
     }
 }

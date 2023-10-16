@@ -1,22 +1,16 @@
-﻿using System.ComponentModel;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+using System.ComponentModel;
 
-namespace task_manager.data.Models
+namespace task_manager.api.Requests.Step
 {
-    [Table("Steps")]
-    public class Step
+    public class CreateStepRequest
     {
-        public int Id { get; set; }
-
         [DisplayName("Descripción")]
         [Required(AllowEmptyStrings = false, ErrorMessage = "El campo {0} es requerido")]
         [StringLength(100, ErrorMessage = "Se esperaba uan cadena con un máximo de {1} caracteres")]
         public string Description { get; set; }
 
-        [ForeignKey("Task")]
         public Guid TaskId { get; set; }
-
-        public Task Task { get; set; }
     }
 }

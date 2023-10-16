@@ -22,7 +22,7 @@ namespace task_manager.data.Repositories
         {
             return await _context.Categories.FindAsync(id);
         }
-        public System.Threading.Tasks.Task<Category> GetASync(string id)
+        public System.Threading.Tasks.Task<Category> GetAsync(string id)
         {
             throw new NotImplementedException("This method is not supported");
         }
@@ -73,7 +73,7 @@ namespace task_manager.data.Repositories
             throw new NotImplementedException("This method is not supported");
         }
 
-        public async System.Threading.Tasks.Task<int> SaveSync()
+        public async System.Threading.Tasks.Task<int> SaveAsync()
         {
             return await _context.SaveChangesAsync();
         }
