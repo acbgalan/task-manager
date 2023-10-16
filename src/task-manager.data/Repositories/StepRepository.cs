@@ -1,77 +1,84 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using task_manager.data.Models;
 using task_manager.data.Repositories.Interface;
 
 namespace task_manager.data.Repositories
 {
-    public class CategoryRepository : ICategoryRepository
+    public class StepRepository : IStepRepository
     {
         private readonly ApplicationDBContext _context;
 
-        public CategoryRepository(ApplicationDBContext context)
+        public StepRepository(ApplicationDBContext context)
         {
             _context = context;
         }
 
-        public async System.Threading.Tasks.Task AddAsync(Category entity)
+        public async System.Threading.Tasks.Task AddAsync(Step entity)
         {
             await _context.AddAsync(entity);
         }
 
-        public async System.Threading.Tasks.Task<Category> GetAsync(int id)
+        public async System.Threading.Tasks.Task<Step> GetAsync(int id)
         {
-            return await _context.Categories.FindAsync(id);
+            return await _context.Steps.FindAsync(id);
         }
-        public System.Threading.Tasks.Task<Category> GetAsync(string id)
+
+        public async System.Threading.Tasks.Task<Step> GetAsync(string id)
         {
             throw new NotImplementedException("This method is not supported");
         }
 
-        public async System.Threading.Tasks.Task<List<Category>> GetAllAsync()
+        public async System.Threading.Tasks.Task<List<Step>> GetAllAsync()
         {
-            return await _context.Categories.ToListAsync();
+            return await _context.Steps.ToListAsync();
         }
 
-        public async System.Threading.Tasks.Task UpdateAsync(Category entity)
+        public async System.Threading.Tasks.Task UpdateAsync(Step entity)
         {
             await System.Threading.Tasks.Task.Run(() =>
             {
-                _context.Categories.Update(entity);
+                _context.Steps.Update(entity);
             });
         }
 
         public async System.Threading.Tasks.Task DeleteAsync(int id)
         {
-            Category category = await this.GetAsync(id);
+            Step step = await this.GetAsync(id);
 
-            if (category != null)
+            if (step != null)
             {
-                _context.Categories.Remove(category);
+                _context.Steps.Remove(step);
             }
         }
 
-        public System.Threading.Tasks.Task DeleteAsync(string id)
+        public async System.Threading.Tasks.Task DeleteAsync(string id)
         {
             throw new NotImplementedException("This method is not supported");
         }
 
-        public async System.Threading.Tasks.Task DeleteAsync(Category entity)
+        public async System.Threading.Tasks.Task DeleteAsync(Step entity)
         {
             await System.Threading.Tasks.Task.Run(() =>
             {
-                _context.Categories.Remove(entity);
+                _context.Steps.Remove(entity);
             });
         }
 
         public async System.Threading.Tasks.Task<bool> ExitsAsync(int id)
         {
-            return await _context.Categories.AnyAsync(x => x.Id == id);
+            return await _context.Steps.AnyAsync(x => x.Id == id);
         }
 
-        public System.Threading.Tasks.Task<bool> ExitsAsync(string id)
+        public async System.Threading.Tasks.Task<bool> ExitsAsync(string id)
         {
             throw new NotImplementedException("This method is not supported");
         }
+
 
         public async System.Threading.Tasks.Task<int> SaveAsync()
         {

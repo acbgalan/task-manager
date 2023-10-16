@@ -62,7 +62,7 @@ namespace task_manager.api.Controllers
 
             var category = _mapper.Map<Category>(createCategoryRequest);
             await _categoryRepository.AddAsync(category);
-            int saveResult = await _categoryRepository.SaveSync();
+            int saveResult = await _categoryRepository.SaveAsync();
 
             if (!(saveResult > 0))
             {
@@ -96,7 +96,7 @@ namespace task_manager.api.Controllers
 
             category.Id = id;
             await _categoryRepository.UpdateAsync(category);
-            int saveResult = await _categoryRepository.SaveSync();
+            int saveResult = await _categoryRepository.SaveAsync();
 
             if (!(saveResult > 0))
             {
@@ -119,7 +119,7 @@ namespace task_manager.api.Controllers
             }
 
             await _categoryRepository.DeleteAsync(id);
-            int saveResult = await _categoryRepository.SaveSync();
+            int saveResult = await _categoryRepository.SaveAsync();
 
             if (!(saveResult > 0))
             {

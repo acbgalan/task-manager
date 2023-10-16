@@ -12,6 +12,7 @@ namespace task_manager.data
 
         public DbSet<Task> Tasks { get; set; }
         public DbSet<Category> Categories { get; set; }
+        public DbSet<Step> Steps { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

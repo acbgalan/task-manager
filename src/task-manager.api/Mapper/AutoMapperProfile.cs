@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using task_manager.api.Requests.Category;
 using task_manager.api.Responses.Category;
+using task_manager.api.Responses.Step;
 using task_manager.data.Models;
 
 namespace task_manager.api.Mapper
@@ -10,6 +11,7 @@ namespace task_manager.api.Mapper
         public AutoMapperProfile()
         {
             CategoryMapping();
+            StepMapping();
         }
 
 
@@ -17,6 +19,11 @@ namespace task_manager.api.Mapper
         {
             CreateMap<Category, CategoryResponse>();
             CreateMap<CreateCategoryRequest, Category>();
+        }
+
+        public void StepMapping()
+        {
+            CreateMap<Step, StepResponse>();
         }
 
     }
