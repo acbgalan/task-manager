@@ -80,7 +80,7 @@ namespace task_manager.api.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
 
-        public async Task<ActionResult> UpdateCategory(int id, Category category)
+        public async Task<ActionResult> UpdateCategory(int id, Category category) //TODO: Se debe recibir DTO y usar automapper
         {
             if (category == null)
             {
